@@ -205,19 +205,3 @@ So far we have two internal services for handling data from the bots:
     * Entrata
     * Leadmailbox
 
-Entrata
-^^^^^^^
-To enable Entrata requests simply add Chatbot with specific ``access_id`` and select checkbox called ``Is entrata``.
-In this case all responses from user will be saved in a JSON ``request_data`` field in model ``EntrataRequest``.
-
-Leadmailbox
-^^^^^^^^^^^
-Make sure to enable checkboxes ``Is leadmailbox`` and ``Is persist data``. See more comments
-in ``webchat.chatbots.watsonbot.py`` function called ``send_to_leadmailbox``
-
-Data for this service will be send right after ``end_conversation`` flag from the bot.
-In case of fail - log will be saved.
-
-
-Additional information about methods/functions and logic you can find in docstring in files like
-``views.py``, ``models.py``
