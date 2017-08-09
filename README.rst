@@ -218,5 +218,6 @@ in ``webchat.chatbots.watsonbot.py`` function called ``send_to_leadmailbox``
 Data for this service will be send right after ``end_conversation`` flag from the bot.
 In case of fail - log will be saved.
 
-* Additional information about methods/functions and logic you can find in docstring in files like
-``views.py``, ``models.py`` *
+
+Additional information about methods/functions and logic you can find in docstring in files like
+``views.py``, ``models.py``
