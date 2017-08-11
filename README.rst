@@ -33,6 +33,8 @@ in bot's questions. To do that we need to open ``Dialog`` tab in IBMWatson_ dash
 
 Replace ``variable_name`` with desired keyword.
 
+.. image:: documentation/ibm1.png
+
 Working with backend
 ^^^^^^^^^^^^^^^^^^^^
 Most of our bots are gathering specific data such as First Name, Phonenumber, Emails etc. In most cases all data
@@ -52,10 +54,16 @@ In this case all responses from user will be saved in a JSON ``request_data`` fi
 Leadmailbox
 ^^^^^^^^^^^
 Make sure to enable checkboxes ``Is leadmailbox`` and ``Is persist data``.
-If you need add/modify/delete fields for this metho see function called ``send_to_leadmailbox``
-in ``webchat.chatbots.watsonbot.py``.
+If you need add/modify/delete fields for this method see function called ``send_to_leadmailbox``
+in ``webchat.chatbots.watsonbot.py``. For example, let's add a new field called ``Social Security Number``
+into leadmailbox 'package'> Let's find ``def send_to_leadmailbox()`` function > then find a dictionary
+with all fields called ``data``> and add a one line of code:
+    $ "City": "self.context.get('city')",
+
+Don't forget to add contex variable name ``city`` in IBMWatson_ dashboard.
 
 Data for this service will be send right after ``end_conversation`` flag from the bot.
+
 In case of fail - log will be saved.
 
 
