@@ -25,7 +25,8 @@ IBMWatson_ > Deploy > Credentials > Workspace Details and copy ``Workspace ID``
 Passing context from chatbot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 All response from new IBMWatson_ can be saved and processed on our side. All we have to do is add context variable
-in bot's questions. To do that we need to open ``Dialog`` tab in IBMWatson_ dashboard and add following lines:
+in bot's questions. To do that we need to open ``Dialog`` tab in IBMWatson_ dashboard, expand dialog boxes
+and add following lines:
 
     $ "context": {
     $   "variable_name": "<? input_text ?>"
@@ -34,6 +35,12 @@ in bot's questions. To do that we need to open ``Dialog`` tab in IBMWatson_ dash
 Replace ``variable_name`` with desired keyword.
 
 .. image:: documentation/ibm1.png
+
+Click on button with 3 dots on the right ``Open JSON editor``. Example of added snippet for ``last_name``
+context variable:
+
+.. image:: documentation/ibm2.png
+
 
 Working with backend
 ^^^^^^^^^^^^^^^^^^^^
@@ -51,10 +58,16 @@ Entrata
 To enable Entrata requests simply add Chatbot with specific ``access_id`` and select checkbox called ``Is entrata``.
 In this case all responses from user will be saved in a JSON ``request_data`` field in model ``EntrataRequest``.
 
+Completed Etrata data will be saved with status ``PENDING`` and will be picked up by celery worker
+in ``webchat.entrata.tasks.py``. Celery worker is looking for
+
 Leadmailbox
 ^^^^^^^^^^^
 Make sure to enable checkboxes ``Is leadmailbox`` and ``Is persist data``.
 If you need add/modify/delete fields for this method see function called ``send_to_leadmailbox``
+
+.. image:: documentation/adm1.png
+
 in ``webchat.chatbots.watsonbot.py``. For example, let's add a new field called ``Social Security Number``
 into leadmailbox 'package'> Let's find ``def send_to_leadmailbox()`` function > then find a dictionary
 with all fields called ``data``> and add a one line of code:
@@ -62,9 +75,11 @@ with all fields called ``data``> and add a one line of code:
 
 Don't forget to add contex variable name ``city`` in IBMWatson_ dashboard.
 
-Data for this service will be send right after ``end_conversation`` flag from the bot.
-
-In case of fail - log will be saved.
+Data for this service will be send right after ``end_conversation`` flag from the bot. E.g. when all questions
+from bot are answered.
+In case of fail - log with error message will be saved.
+NOTE:
+    Leadmailbox.com is not accept requests from non US IP addresses.
 
 
 Additional information about methods/functions and logic you can find in docstring in files like
